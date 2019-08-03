@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import test.com.apnigaadi.Vehicle_list.Car_Data;
 import test.com.apnigaadi.Vehicle_list.User_Data;
 import test.com.apnigaadi.Vehicle_list.WantCar;
 
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             fragment=new dashboard();
         } else if (id == R.id.addvehicle) {
-
+            fragment = new Car_Data();
 
         } else if (id == R.id.rentvehicle) {
             fragment = new WantCar();
