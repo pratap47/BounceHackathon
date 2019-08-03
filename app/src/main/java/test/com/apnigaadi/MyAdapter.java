@@ -1,6 +1,7 @@
 package test.com.apnigaadi;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -48,9 +49,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.Viewholder> {
 //                 ft.replace(R.id.fragment_Container,fragment);
 //                 ft.commit();
 
-                 AppCompatActivity activity=(AppCompatActivity) view.getContext();
+        /*         AppCompatActivity activity=(AppCompatActivity) view.getContext();
                  Fragment fragment=new rentit();
-                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_Container,fragment).addToBackStack(null).commit();
+                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_Container,fragment).addToBackStack(null).commit();*/
+
+                 Fragment fragment = new rentit();
+                 Bundle bundle = new Bundle();
+                 bundle.putInt("viewpager", 2);
+                 /*the above value 2 indicates the second fragment*/
+                 fragment.setArguments(bundle);
+                 FragmentManager manager = ((AppCompatActivity)context).getSupportFragmentManager();
+                 FragmentTransaction transaction =
+                         manager.beginTransaction();
+
+                 transaction.replace(R.id.fragment_Container, fragment,"SOMETAG").commit();
              }
 
          });
