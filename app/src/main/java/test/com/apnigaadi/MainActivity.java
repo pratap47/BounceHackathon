@@ -78,10 +78,12 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.dashboard) {
             // Handle the camera action
+            fragment=new dashboard();
         } else if (id == R.id.addvehicle) {
 
 
         } else if (id == R.id.rentvehicle) {
+            fragment = new WantCar();
 
         } else if (id == R.id.profile) {
 

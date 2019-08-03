@@ -16,7 +16,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.Viewholder> {
     Context context;
     private static final String TABLE_NAME = "INFO";
 
-
     public MyAdapter(List <otheruserinfo> list, Context context) {
         this.list = list;
         this.context = context;
@@ -26,19 +25,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.Viewholder> {
     @Override
     public MyAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adaptor, parent, false);
-
         return new Viewholder(v);
     }
     public otheruserinfo l;
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.Viewholder holder, int position) {
          l = list.get(position);
-
-        holder.slno.setText("SNo." + String.valueOf(l.get_id()));
-        holder.txttitle.setText(l.get_name());
-        holder.txtdate.setText(l.get_phone_number());
-        holder.txtid.setText(l.getUID());
-
+         holder.txtModel.setText(l.getmModel());
+         holder.txtBrand.setText(l.getmManufacturer());
     }
     @Override
     public int getItemCount()
@@ -48,33 +42,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.Viewholder> {
 
 
     public class Viewholder extends RecyclerView.ViewHolder{
-        public TextView txttitle;
-        public TextView txtdate ;
-        public TextView txtid ;
-        public TextView slno;
-        public TextView update;
-        public TextView delete;
+        public TextView txtBrand;
+        public TextView txtModel ;
+
         public Viewholder(final View itemView) {
             super(itemView);
-            slno=(TextView) itemView.findViewById(R.id.slno);
-            txttitle = (TextView)itemView.findViewById(R.id.txtname);
-            txtdate =(TextView)itemView.findViewById(R.id.txtphone);
-            txtid =(TextView)itemView.findViewById(R.id.txtuid);
-//           update=(TextView)itemView.findViewById(R.id.update);
-//           delete=(TextView)itemView.findViewById(R.id.delete);
-
-//
-//        delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//                db.deleteContact(l.get_id());
-//            }
-//        });
-
-
-
+           txtBrand = itemView.findViewById(R.id.txtBrand);
+           txtModel = itemView.findViewById(R.id.txtModel);
         }
     }
 }

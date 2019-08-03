@@ -1,58 +1,33 @@
 package test.com.apnigaadi;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class otheruserinfo {
 
-    int _id;
-    String _name;
-    String _phone_number;
-    String UID;
-
-    public otheruserinfo(){}
-    public otheruserinfo(int id, String name, String _phone_number, String UID){
-        this._id = id;
-        this._name = name;
-        this._phone_number = _phone_number;
-        this.UID=UID;
-    }
-    public otheruserinfo(String name, String _phone_number, String UID){
-        this._name = name;
-        this._phone_number = _phone_number;
-        this.UID=UID;
-
+    String mManufacturer , mModel;
+    public otheruserinfo(JSONObject object) {
+        try {
+            mModel = object.getString("model");
+            mManufacturer = object.getString("manufacturer");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    public int get_id() {
-        return _id;
+    public String getmManufacturer() {
+        return mManufacturer;
     }
 
-    public void set_id(int _id) {
-        this._id = _id;
+    public void setmManufacturer(String mManufacturer) {
+        this.mManufacturer = mManufacturer;
     }
 
-    public String get_name() {
-        return _name;
+    public String getmModel() {
+        return mModel;
     }
 
-    public void set_name(String _name) {
-        this._name = _name;
+    public void setmModel(String mModel) {
+        this.mModel = mModel;
     }
-
-    public String get_phone_number() {
-        return _phone_number;
-    }
-
-    public void set_phone_number(String _phone_number) {
-        this._phone_number = _phone_number;
-    }
-
-    public String getUID() {
-        return UID;
-    }
-
-    public void setUID(String UID) {
-        this.UID = UID;
-    }
-
-
-
 }
