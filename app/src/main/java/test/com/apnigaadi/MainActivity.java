@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import test.com.apnigaadi.Vehicle_list.User_Data;
 import test.com.apnigaadi.Vehicle_list.WantCar;
 
 public class MainActivity extends AppCompatActivity
@@ -36,6 +37,18 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+
+    public void uploadFragment(Fragment fragment) {
+        if(fragment !=null)
+        {
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            FragmentTransaction ft=fragmentManager.beginTransaction();
+            ft.replace(R.id.fragment_Container,fragment);
+            ft.commit();
+        }
+
     }
 
     @Override
@@ -86,6 +99,7 @@ public class MainActivity extends AppCompatActivity
             fragment = new WantCar();
 
         } else if (id == R.id.profile) {
+            fragment = new User_Data();
 
         } else if (id == R.id.nav_share) {
 
@@ -98,14 +112,5 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void uploadFragment(Fragment fragment) {
-    if(fragment !=null)
-    {
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction ft=fragmentManager.beginTransaction();
-        ft.replace(R.id.fragment_Container,fragment);
-        ft.commit();
-    }
 
-    }
 }

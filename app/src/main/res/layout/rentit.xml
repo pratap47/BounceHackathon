@@ -17,7 +17,6 @@
         android:layout_marginBottom="640dp"
         android:text="Please Upload Car Image"
         android:textAlignment="center"
-        android:textColor="@color/purple"
         android:textSize="20sp" />
 
     <ProgressBar

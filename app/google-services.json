@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "184308464523",
+    "firebase_url": "https://bouncehackathon.firebaseio.com",
+    "project_id": "bouncehackathon",
+    "storage_bucket": "bouncehackathon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184308464523:android:2f5dcc634ad467db",
+        "android_client_info": {
+          "package_name": "test.com.apnigaadi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184308464523-9ligbb5ml3uvi6is2kc1teab0ro82icc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "test.com.apnigaadi",
+            "certificate_hash": "fc3304c4a756219314648d51ec86f0ff12353d3a"
+          }
+        },
+        {
+          "client_id": "184308464523-ehimc4qehj69sovda1si5c3l5alsck4f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDoE-MkHSYwwcV6hrqx4JjUzG0Q6eUsG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184308464523-ehimc4qehj69sovda1si5c3l5alsck4f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

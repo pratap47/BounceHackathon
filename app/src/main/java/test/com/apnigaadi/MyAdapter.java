@@ -2,10 +2,15 @@ package test.com.apnigaadi;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -33,7 +38,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.Viewholder> {
          l = list.get(position);
          holder.txtModel.setText(l.getmModel());
          holder.txtBrand.setText(l.getmManufacturer());
+         holder.btnHost.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+//                 FragmentManager fragmentManager=getSupportFragmentManager();
+//
+////                 ShareFragment shareFragment=new ShareFragment();
+//                 FragmentTransaction ft=getFra.beginTransaction();
+//                 ft.replace(R.id.fragment_Container,fragment);
+//                 ft.commit();
+
+                 AppCompatActivity activity=(AppCompatActivity) view.getContext();
+                 Fragment fragment=new rentit();
+                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_Container,fragment).addToBackStack(null).commit();
+             }
+
+         });
     }
+
     @Override
     public int getItemCount()
     {
@@ -44,11 +66,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.Viewholder> {
     public class Viewholder extends RecyclerView.ViewHolder{
         public TextView txtBrand;
         public TextView txtModel ;
+        public Button btnHost ;
 
         public Viewholder(final View itemView) {
             super(itemView);
            txtBrand = itemView.findViewById(R.id.txtBrand);
            txtModel = itemView.findViewById(R.id.txtModel);
+           btnHost = itemView.findViewById(R.id.btnHost);
         }
     }
 }
