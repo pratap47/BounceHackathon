@@ -186,7 +186,7 @@ private ProgressBar uploadProgress;
                         public void onSuccess(Uri uri) {
                             String st=uri.toString();
 
-                            com.example.bouncehackathon.Upload upload=new com.example.bouncehackathon.Upload(odomenter.getText().toString(),vehiclePrice.getText().toString(), locationOfVeicle.getText().toString(),st);
+                            Upload upload=new Upload(odomenter.getText().toString(),vehiclePrice.getText().toString(), locationOfVeicle.getText().toString(),st);
 
                             String uploadID=mDatabase.push().getKey();
                             mDatabase.child(uploadID).setValue(upload);
