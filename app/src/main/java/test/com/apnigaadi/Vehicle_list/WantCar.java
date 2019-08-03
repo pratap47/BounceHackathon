@@ -1,7 +1,10 @@
 package test.com.apnigaadi.Vehicle_list;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -14,6 +17,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -32,16 +38,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import test.com.apnigaadi.R;
 
 public class WantCar extends Fragment {
+
+    Button btnSubmit ;
+    static final int DATE_DIALOG_ID = 0;
+    EditText mBodyText,mBodyend;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<Listitem> listitems;
-    private RequestQueue requestQueue ;
-    private int code = 101;
+    private int code =101;
     public static boolean mLocationPermissionGranted = false;
     Intent i;
     FusedLocationProviderClient fusedLocationProviderclient;
@@ -57,53 +67,81 @@ public class WantCar extends Fragment {
         // Inflate the layout for this fragment
         View w= inflater.inflate(R.layout.fragment_want_car, container, false);
 
+        mBodyText= w.findViewById(R.id.mBodyText);
+        mBodyend = w.findViewById(R.id.mBodyEnd);
+        btnSubmit = w.findViewById(R.id.btnsubmit);
+
+      //  DateString dateObject = new DateString(Integer.parseInt(mDay),Integer.parseInt(mMonth),Integer.parseInt(mYear));
+
         Toast.makeText(getActivity(),"want car",Toast.LENGTH_LONG).show();
         recyclerView = w.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listitems = new ArrayList<>();
+        final DateString dateString = new DateString();
         //requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-        String url = "https://bounce-hack.herokuapp.com/api/vehicles";
+        final String url = "https://bounce-hackathon.herokuapp.com/api/sortvehicle?pick="+dateString.getmDate()+"&drop="+dateString.getMdayEnd()+"&lat="+dateString.getLat()+"lon=7"+dateString.getLon();
 
-        JsonArrayRequest ExampleRequest = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                System.out.println(response);
-                try {
-                    int i;
-                    for(i=0;i<response.length();i++) {
-                        JSONObject object = response.getJSONObject(i);
-                        Listitem list  = new Listitem(object);
-                        listitems.add(list);                                //2440004
-                    }
-                    adapter = new RentCarAdapter(listitems,getActivity());
-                    recyclerView.setAdapter(adapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-            }
-        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //This code is executed if there is an error.
-                System.out.println(error);
-            }
-        });
-        Mysingleton.getInstance(getActivity()).addToRequestqueue(ExampleRequest);
 
     getLocationPermission();
-getDeviceLocation();
+    getDeviceLocation();
+        SharedPreferences prefs = getActivity().getSharedPreferences("location", getActivity().MODE_PRIVATE);
+
+            float lat = prefs.getFloat("lat",  0);//"No name defined" is the default value.
+            float lon = prefs.getFloat("long", 0); //0 is the default value.
+
+        dateString.setLat(lat);
+        dateString.setLon(lon);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String date = mBodyText.getText().toString();
+                String dateend = mBodyend.getText().toString();
+                String[] arrend = dateend.split("-");
+                String[] arr = date.split("-");
+                String mDay=arr[0];
+                String mMonth=arr[1];
+                String mYear=arr[2];
+                dateString.setmDate(mDay);
+                dateString.setmMonth(mMonth);
+                dateString.setmYear(mYear);
+                dateString.setMdayEnd(arrend[0]);
+                dateString.setmMonthEnd(arrend[1]);
+                JsonArrayRequest ExampleRequest = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        System.out.println(response);
+                        try {
+                            int i;
+                            for(i=0;i<response.length();i++) {
+                                JSONObject object = response.getJSONObject(i);
+                                Listitem list  = new Listitem(object);
+                                listitems.add(list);                                //2440004
+                            }
+                            adapter = new RentCarAdapter(listitems,getActivity());
+                            recyclerView.setAdapter(adapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //This code is executed if there is an error.
+                        System.out.println(error);
+                    }
+                });
+                Mysingleton.getInstance(getActivity()).addToRequestqueue(ExampleRequest);
+            }
+        });
+
+
          return w;
 
     }
-
-
-
-
-
-
 
 
 
@@ -196,7 +234,7 @@ getDeviceLocation();
 
 //        mDatabase1 = FirebaseDatabase.getInstance().getReference();
         LocationRequest request = new LocationRequest();
-        request.setInterval(10000);
+        //request.setInterval(10000);
 //        request.setFastestInterval(1000);
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
@@ -231,13 +269,14 @@ getDeviceLocation();
 //
 
                                 currentlocation= locationresult.getLastLocation();
-//                                speed=currentlocation.getSpeed()*18/5;
+                                SharedPreferences.Editor editor = getActivity().getSharedPreferences("location", getActivity().MODE_PRIVATE).edit();
+                                editor.putFloat("lat", (float) currentlocation.getLatitude());
+                                editor.putFloat("long", (float) currentlocation.getLongitude());
+                                editor.apply();
 
-//                        new DecimalFormat("#.##").format(speed)
            Toast.makeText(getContext(),Double.toString(currentlocation.getLatitude()),Toast.LENGTH_LONG).show();
                                 Toast.makeText(getContext(),Double.toString(currentlocation.getLongitude()),Toast.LENGTH_LONG).show();
-//                                mDatabase1.child("Latitude").setValue(Double.toString(currentlocation.getLatitude()));
-//                                mDatabase1.child("Longitude").setValue(Double.toString(currentlocation.getLongitude()));
+
 
 
                             }
