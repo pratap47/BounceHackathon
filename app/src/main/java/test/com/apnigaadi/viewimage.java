@@ -1,4 +1,4 @@
-package com.example.bouncehackathon;
+package test.com.apnigaadi;
 
 import android.content.Context;
 import android.net.Uri;
@@ -27,7 +27,7 @@ public class viewimage extends Fragment {
 
 
    private RecyclerView mRecycleView;
-    private  image_adaptor mAdaptor;
+    private image_adaptor mAdaptor;
     private ProgressBar progressBar;
     private DatabaseReference mDatabaseRef;
     private List<Upload> mUploads;
@@ -51,11 +51,12 @@ public class viewimage extends Fragment {
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                for(DataSnapshot postSnapshot :dataSnapshot.getChildren())
                {
-                   Upload upload= postSnapshot.getValue(Upload.class);
+                  Upload upload= postSnapshot.getValue(Upload.class);
                    mUploads.add(upload);
                }
 
-               mAdaptor =new image_adaptor(getActivity(),mUploads);
+//               mAdaptor =new com.example.bouncehackathon.image_adaptor(getActivity(),mUploads);
+              mAdaptor=new image_adaptor(getActivity(),mUploads);
                mRecycleView.setAdapter(mAdaptor);
 //               progressBar.setVisibility(View.INVISIBLE);
            }

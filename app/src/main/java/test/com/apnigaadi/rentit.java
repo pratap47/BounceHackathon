@@ -1,12 +1,10 @@
-package com.example.bouncehackathon;
+package test.com.apnigaadi;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -31,14 +29,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 
 
-public class MainActivity extends Fragment {
+public class rentit extends Fragment {
    public static Uri uriprofileimage;
    private Button chooseImage;
 private ImageView imagePreview;
@@ -55,7 +51,7 @@ private ProgressBar uploadProgress;
 
 
     private int requestcode=12;
-   public MainActivity() {
+   public rentit() {
         // Required empty public constructor
     }
 
@@ -84,7 +80,7 @@ private ProgressBar uploadProgress;
         viewImageofcar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Framelayoutclass.fragmentManager.beginTransaction().replace(R.id.fragment_Container,new viewimage()).addToBackStack(null).commit();
+//                Framelayoutclass.fragmentManager.beginTransaction().replace(R.id.fragment_Container,new com.example.bouncehackathon.viewimage()).addToBackStack(null).commit();
             }
         });
 
