@@ -49,7 +49,7 @@ public class WantCar extends Fragment {
     static final int DATE_DIALOG_ID = 0;
     EditText mBodyText,mBodyend;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private RentCarAdapter adapter;
     private List<Listitem> listitems;
     private int code =101;
     public static boolean mLocationPermissionGranted = false;
@@ -81,7 +81,7 @@ public class WantCar extends Fragment {
         final DateString dateString = new DateString();
         //requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-        final String url = "https://bounce-hackathon.herokuapp.com/api/sortvehicle?pick="+dateString.getmDate()+"&drop="+dateString.getMdayEnd()+"&lat="+dateString.getLat()+"lon=7"+dateString.getLon();
+
 
 
 
@@ -109,6 +109,7 @@ public class WantCar extends Fragment {
                 dateString.setmYear(mYear);
                 dateString.setMdayEnd(arrend[0]);
                 dateString.setmMonthEnd(arrend[1]);
+                String url = "https://bounce-hackathon.herokuapp.com/api/sortvehicle?pick="+dateString.getmDate()+"&drop="+dateString.getMdayEnd()+"&lat="+dateString.getLat()+"lon=7"+dateString.getLon();
                 JsonArrayRequest ExampleRequest = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -121,6 +122,7 @@ public class WantCar extends Fragment {
                                 listitems.add(list);                                //2440004
                             }
                             adapter = new RentCarAdapter(listitems,getActivity());
+                            adapter.notifyDataSetChanged();
                             recyclerView.setAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();

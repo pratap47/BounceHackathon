@@ -1,6 +1,7 @@
 package test.com.apnigaadi;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -47,7 +48,11 @@ public class dashboard extends Fragment {
          Toast.makeText(getActivity(),"Dashboard",Toast.LENGTH_LONG).show();
          recyclerView = v.findViewById(R.id.recyclerview);
          listitems = new ArrayList<>();
-        String url = "https://bounce-hack.herokuapp.com/api/uservehicles/5d3ff3d66f171c0031226a01";
+        SharedPreferences prefs = getActivity().getSharedPreferences("mypref", getActivity().MODE_PRIVATE);
+
+        String id = prefs.getString("id", "No name defined");//"No name defined" is the default value.
+
+        String url = "https://bounce-hack.herokuapp.com/api/uservehicles/"+id ;
 
         JsonObjectRequest ExampleRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
             @Override

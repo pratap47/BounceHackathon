@@ -6,9 +6,9 @@ import org.json.JSONObject;
 import java.net.URI;
 
 public class Listitem {
-    private String mBrand ,mModel, mId, mFuel,mSeats ;
+    private String mBrand ,mModel, mId, mFuel,mSeats;
+    int mPricePerKm,mBasePrice;
     private URI mFrontImage;
-
     public Listitem(JSONObject object) {
         try {
             mBrand = object.getString("manufacturer");
@@ -16,10 +16,30 @@ public class Listitem {
             mId=object.getString("_id");
             mFuel = object.getString("fueltype");
             mSeats = object.getString("seats");
+            mPricePerKm = object.getInt("priceperkm");
+            mBasePrice=object.getInt("price");
+
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getmPricePerKm() {
+        return mPricePerKm;
+    }
+
+    public void setmPricePerKm(int mPricePerKm) {
+        this.mPricePerKm = mPricePerKm;
+    }
+
+    public int getmBasePrice() {
+        return mBasePrice;
+    }
+
+    public void setmBasePrice(int mBasePrice) {
+        this.mBasePrice = mBasePrice;
     }
 
     public String getmBrand() {

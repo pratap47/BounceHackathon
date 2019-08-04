@@ -33,7 +33,9 @@ public class RentCarAdapter extends RecyclerView.Adapter<RentCarAdapter.Viewhold
         Listitem item =list.get(position);
         holder.txtBrand.setText(item.getmBrand());
         holder.txtModel.setText(item.getmModel());
-        //holder.txtPricePerKm.setText(item.);
+        holder.txtPricePerKm.setText(item.getmPricePerKm());
+        holder.txtBasePrice.setText(item.getmBasePrice());
+
     }
 
     @Override
