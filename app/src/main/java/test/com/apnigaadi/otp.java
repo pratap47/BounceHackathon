@@ -123,6 +123,7 @@ img.setAlpha(.7f);
                 // now need to ask the user to enter the code and then construct a credential
 
                 // by combining the code with a verification ID.
+                btnOTP.setEnabled(false);
 
                 Toast.makeText(otp.this, verificationId, Toast.LENGTH_SHORT).show();
 
@@ -209,7 +210,6 @@ img.setAlpha(.7f);
                             editor.putString("Phone",phonenumber);
                             editor.putString("Uid",mAuth.getUid());
                             editor.commit();
-
 
 
                             Intent intent=new Intent(otp.this, MainActivity.class);
