@@ -1,16 +1,21 @@
 package test.com.apnigaadi;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +33,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +55,7 @@ import java.io.IOException;
 
 import test.com.apnigaadi.Vehicle_list.DateString;
 import test.com.apnigaadi.Vehicle_list.ExtraVehicleDetails;
+import test.com.apnigaadi.Vehicle_list.WantCar;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -59,10 +70,16 @@ private TextView viewImageofcar;
 EditText odomenter,edtstart,edtend;
 EditText vehiclePrice;
 EditText locationOfVeicle;
-RequestQueue requestQueue;
+    private int code =101;
+    public static boolean mLocationPermissionGranted = false;
+
+    RequestQueue requestQueue;
 private StorageTask mUploadtask;
 private ProgressBar uploadProgress;
 String id;
+    FusedLocationProviderClient fusedLocationProviderclient;
+    private Location currentlocation;
+
 
     private StorageReference mstoreref;
     DatabaseReference mDatabase;
@@ -108,6 +125,9 @@ String id;
                 FragmentTransaction ft=fragmentManager.beginTransaction();
                 ft.replace(R.id.fragment_Container,new viewimage());
                 ft.commit();
+
+                getLocationPermission();
+                getDeviceLocation();
 
             }
         });
@@ -189,6 +209,153 @@ String id;
 
         return  mine.getExtensionFromMimeType(CR.getType(uri));
     }
+
+
+    private void getLocationPermission() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(getContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED)
+        {
+            if (ContextCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionGranted = true;
+
+                //If the location permission has been granted, then start the TrackerService//
+//                i =  new Intent(getActivity(), TrackingService.class);
+//                getActivity().startService(i);
+
+
+            }
+            else {
+
+                //If the app doesn’t currently have access to the user’s location, then request access//
+
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        code);
+            }
+        }
+        else
+        {
+
+            //If the app doesn’t currently have access to the user’s location, then request access//
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    code);
+        }
+
+    }
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //Toast.makeText(this,"We are in onRequestPermission",Toast.LENGTH_SHORT).show();
+//If the permission has been granted...//
+
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case 101: {
+                if (grantResults.length > 0) {
+                    for (int j = 0; j < grantResults.length; j++) {
+                        if (grantResults[j] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionGranted = true;
+                            //...then start the GPS tracking service//
+
+                            Toast.makeText(getContext(), "onRequestPermissionResult", Toast.LENGTH_SHORT).show();
+//                            i =  new Intent(getActivity(), TrackingService.class);
+//                            getActivity().startService(i);
+
+                            return;
+                        }
+                        else
+                        {
+                            //If the user denies the permission request, then display a toast with some more information//
+
+                            Toast.makeText(getContext(), "Please enable location services to allow GPS tracking", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+
+
+    private void getDeviceLocation() {
+        /*
+         * Get the best and most recent location of the device, which may be null in rare
+         * cases when a location is not available.
+         */
+
+
+//        mDatabase1 = FirebaseDatabase.getInstance().getReference();
+        LocationRequest request = new LocationRequest();
+        //request.setInterval(10000);
+//        request.setFastestInterval(1000);
+        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        fusedLocationProviderclient = LocationServices.getFusedLocationProviderClient(getActivity());
+//        SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+//        uid=sharedPreferences.getString("Uid",Default);
+//        phoneno=sharedPreferences.getString("Phone",Default);     //Default value get displayed when no data is entered in main activity
+//        name=sharedPreferences.getString("name",Default);
+
+//        mDatabase1=mDatabase1.child(phoneno);
+//      map.alert();
+
+        try {
+            if (WantCar.mLocationPermissionGranted) {
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                fusedLocationProviderclient.requestLocationUpdates(request,
+                        new LocationCallback() {
+                            @Override
+                            public void onLocationResult(LocationResult locationresult) {
+//
+
+                                currentlocation= locationresult.getLastLocation();
+                                SharedPreferences.Editor editor = getActivity().getSharedPreferences("location", getActivity().MODE_PRIVATE).edit();
+                                editor.putFloat("lat", (float) currentlocation.getLatitude());
+                                editor.putFloat("long", (float) currentlocation.getLongitude());
+                                editor.apply();
+
+                                Toast.makeText(getContext(),Double.toString(currentlocation.getLatitude()),Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(),Double.toString(currentlocation.getLongitude()),Toast.LENGTH_LONG).show();
+
+
+
+                            }
+                        }, null);
+            }
+        }
+        catch (SecurityException e)
+        {
+            Toast.makeText(getContext(),"We are in getDeviceLocation>>catch",Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
 
 
     private void uploadImageToFirebaseStorage() {
