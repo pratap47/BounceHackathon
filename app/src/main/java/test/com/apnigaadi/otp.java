@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +30,7 @@ public class otp extends AppCompatActivity {
     private EditText phonetxt;
 
     private EditText codetxt;
-
+ImageView img;
 
     private Button btnOTP;
 
@@ -54,7 +55,8 @@ public class otp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.otp);
-
+img=findViewById(R.id.img);
+img.setAlpha(.7f);
         mAuth= FirebaseAuth.getInstance();
 
 
