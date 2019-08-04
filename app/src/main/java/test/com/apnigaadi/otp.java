@@ -30,7 +30,6 @@ public class otp extends AppCompatActivity {
 
     private EditText codetxt;
 
-    private EditText name;
 
     private Button btnOTP;
 
@@ -65,7 +64,6 @@ public class otp extends AppCompatActivity {
 
         btnOTP= (Button)   findViewById(R.id.btnotp);
 
-        name=(EditText) findViewById(R.id.nameotp);
         sharedPreferences=getSharedPreferences("MyData", Context.MODE_PRIVATE);
        editor=sharedPreferences.edit();
 
@@ -149,19 +147,7 @@ public class otp extends AppCompatActivity {
     }
 
     private void weathernameisenterornot() {
-String s =name.getText().toString();
-if(s.isEmpty())
-        {
-        name.setError("Name can't be empty");
-        name.requestFocus();
-        return;
-        }
-        else {
 
-        editor.putString("name",s);
-        name.setError("");
-        name.clearFocus();
-        }
         String p=phonetxt.getText().toString();
 
         if (p.isEmpty())
