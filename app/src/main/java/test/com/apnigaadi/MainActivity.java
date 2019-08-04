@@ -1,5 +1,8 @@
 package test.com.apnigaadi;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -102,7 +105,20 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.profile) {
             fragment = new User_Data();
 
-        } else if (id == R.id.nav_share) {
+        }
+        else if (id==R.id.logout)
+        {
+
+            SharedPreferences sharedPreferences=getSharedPreferences("MyData", Context.MODE_PRIVATE);
+            sharedPreferences.edit().remove("Phone").commit();
+            sharedPreferences.edit().remove("Uid").commit();
+
+
+            Intent in = new Intent(MainActivity.this,otp.class);
+            startActivity(in);
+
+        }
+        else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 

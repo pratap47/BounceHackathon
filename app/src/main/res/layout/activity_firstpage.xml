@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FF7A22"
+
     tools:context=".firstpage"
     >
 
@@ -13,8 +14,6 @@
         android:id="@+id/button3"
         android:layout_width="157dp"
         android:layout_height="119dp"
-
-
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
@@ -26,6 +25,12 @@
         android:textAllCaps="true"
         android:textStyle="italic" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="248dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="150dp"
+        android:src="@drawable/app_icon" />
 
 
 </RelativeLayout>

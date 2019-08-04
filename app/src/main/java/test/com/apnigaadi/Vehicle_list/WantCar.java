@@ -196,7 +196,7 @@ getDeviceLocation();
 
 //        mDatabase1 = FirebaseDatabase.getInstance().getReference();
         LocationRequest request = new LocationRequest();
-        request.setInterval(10000);
+//        request.setInterval(10000);
 //        request.setFastestInterval(1000);
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
