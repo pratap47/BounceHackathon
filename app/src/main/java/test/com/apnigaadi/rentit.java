@@ -2,6 +2,7 @@ package test.com.apnigaadi;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -31,9 +38,16 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
+import test.com.apnigaadi.Vehicle_list.DateString;
+import test.com.apnigaadi.Vehicle_list.ExtraVehicleDetails;
+
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class rentit extends Fragment {
@@ -42,11 +56,13 @@ public class rentit extends Fragment {
 private ImageView imagePreview;
 private Button btnuploadImage;
 private TextView viewImageofcar;
-EditText odomenter;
+EditText odomenter,edtstart,edtend;
 EditText vehiclePrice;
 EditText locationOfVeicle;
+RequestQueue requestQueue;
 private StorageTask mUploadtask;
 private ProgressBar uploadProgress;
+String id;
 
     private StorageReference mstoreref;
     DatabaseReference mDatabase;
@@ -63,7 +79,11 @@ private ProgressBar uploadProgress;
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.rentit,container,false);
+        Bundle args = getArguments();
+        id = args.getString("id");
            chooseImage=v.findViewById(R.id.chooseImage);
+           edtend=v.findViewById(R.id.edtend);
+           edtstart = v.findViewById(R.id.edtstart);
            imagePreview=v.findViewById(R.id.Imagepreview);
            btnuploadImage=v.findViewById(R.id.btnuploadImage);
            viewImageofcar=v.findViewById(R.id.viewImageofcar);
@@ -193,9 +213,38 @@ private ProgressBar uploadProgress;
                         @Override
                         public void onSuccess(Uri uri) {
                             String st=uri.toString();
-
+                            String[] imagearray = {st};
+                            String start = edtstart.getText().toString();
+                            String end = edtend.getText().toString();
+                            String[] startarr = start.split("-");
+                            String[] endarr = end.split("-");
+                            JSONObject pickup = new JSONObject();
+                            try {
+                                pickup.put("date",Integer.parseInt(startarr[0]));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            JSONObject drop = new JSONObject();
+                            try {
+                                drop.put("date",endarr[0]);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            requestQueue = Volley.newRequestQueue(getActivity());
                             Upload upload=new Upload(odomenter.getText().toString(),vehiclePrice.getText().toString(), locationOfVeicle.getText().toString(),st);
-
+                            String url = "https://bounce-hackathon.herokuapp.com/api/vehicles/"+id;
+                            ExtraVehicleDetails details = new ExtraVehicleDetails(locationOfVeicle.getText().toString(),odomenter.getText().toString(),vehiclePrice.getText().toString(),pickup,drop,imagearray);
+                            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, details.getJsonObject(), new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    System.out.println();
+                                }
+                            });
+                            requestQueue.add(jsonObjectRequest);
                             String uploadID=mDatabase.push().getKey();
                             mDatabase.child(uploadID).setValue(upload);
                           imagePreview.setImageResource(R.drawable.photo);

@@ -87,6 +87,26 @@
         android:layout_marginBottom="111dp"
         android:hint="Where to pick your Vehicle?" />
 
+    <EditText
+        android:id="@+id/edtstart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:hint="dd-mm-yy" />
+
+    <EditText
+        android:id="@+id/edtend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="35dp"
+        android:hint="dd-mm-yy" />
+
     <Button
         android:id="@+id/btnuploadImage"
         android:layout_width="wrap_content"

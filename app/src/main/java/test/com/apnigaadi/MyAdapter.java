@@ -20,6 +20,7 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.Viewholder> {
     List <otheruserinfo> list;
     Context context;
+    int index;
     private static final String TABLE_NAME = "INFO";
 
     public MyAdapter(List <otheruserinfo> list, Context context) {
@@ -35,27 +36,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.Viewholder> {
     }
     public otheruserinfo l;
     @Override
-    public void onBindViewHolder(@NonNull MyAdapter.Viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyAdapter.Viewholder holder, int position) {
+
          l = list.get(position);
          holder.txtModel.setText(l.getmModel());
          holder.txtBrand.setText(l.getmManufacturer());
          holder.btnHost.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-//                 FragmentManager fragmentManager=getSupportFragmentManager();
-//
-////                 ShareFragment shareFragment=new ShareFragment();
-//                 FragmentTransaction ft=getFra.beginTransaction();
-//                 ft.replace(R.id.fragment_Container,fragment);
-//                 ft.commit();
 
-        /*         AppCompatActivity activity=(AppCompatActivity) view.getContext();
-                 Fragment fragment=new rentit();
-                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_Container,fragment).addToBackStack(null).commit();*/
+                 index = holder.getAdapterPosition();
+                 String id =list.get(index).getId();
 
                  Fragment fragment = new rentit();
                  Bundle bundle = new Bundle();
                  bundle.putInt("viewpager", 2);
+                 bundle.putString("id",id);
                  /*the above value 2 indicates the second fragment*/
                  fragment.setArguments(bundle);
                  FragmentManager manager = ((AppCompatActivity)context).getSupportFragmentManager();
