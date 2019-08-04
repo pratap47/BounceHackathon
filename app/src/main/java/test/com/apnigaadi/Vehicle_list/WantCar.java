@@ -234,7 +234,11 @@ public class WantCar extends Fragment {
 
 //        mDatabase1 = FirebaseDatabase.getInstance().getReference();
         LocationRequest request = new LocationRequest();
+<<<<<<< HEAD
+//        request.setInterval(10000);
+=======
         //request.setInterval(10000);
+>>>>>>> ab4e1ba723a723a9c6ec3e45b8ef33471caa361e
 //        request.setFastestInterval(1000);
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 

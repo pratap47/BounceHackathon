@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +62,7 @@ private ProgressBar uploadProgress;
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.activity_main,container,false);
+        View v= inflater.inflate(R.layout.rentit,container,false);
            chooseImage=v.findViewById(R.id.chooseImage);
            imagePreview=v.findViewById(R.id.Imagepreview);
            btnuploadImage=v.findViewById(R.id.btnuploadImage);
@@ -69,7 +71,8 @@ private ProgressBar uploadProgress;
        locationOfVeicle=v.findViewById(R.id.locationofVehicle);
        vehiclePrice=v.findViewById(R.id.vehicleprice);
    uploadProgress=v.findViewById(R.id.uploadprogress);
-        imagePreview.setImageResource(R.drawable.photo);
+
+   imagePreview.setImageDrawable(getResources().getDrawable(R.drawable.photo));
 
 
            mstoreref= FirebaseStorage.getInstance().getReference("Upload");
@@ -80,7 +83,12 @@ private ProgressBar uploadProgress;
         viewImageofcar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Framelayoutclass.fragmentManager.beginTransaction().replace(R.id.fragment_Container,new com.example.bouncehackathon.viewimage()).addToBackStack(null).commit();
+//               MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_Container,new viewimage()).addToBackStack(null).commit();
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                FragmentTransaction ft=fragmentManager.beginTransaction();
+                ft.replace(R.id.fragment_Container,new viewimage());
+                ft.commit();
+
             }
         });
 
