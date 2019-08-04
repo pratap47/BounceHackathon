@@ -49,7 +49,7 @@ public class WantCar extends Fragment {
     static final int DATE_DIALOG_ID = 0;
     EditText mBodyText,mBodyend;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private RentCarAdapter adapter;
     private List<Listitem> listitems;
     private int code =101;
     public static boolean mLocationPermissionGranted = false;
@@ -71,7 +71,7 @@ public class WantCar extends Fragment {
         mBodyend = w.findViewById(R.id.mBodyEnd);
         btnSubmit = w.findViewById(R.id.btnsubmit);
 
-      //  DateString dateObject = new DateString(Integer.parseInt(mDay),Integer.parseInt(mMonth),Integer.parseInt(mYear));
+        //  DateString dateObject = new DateString(Integer.parseInt(mDay),Integer.parseInt(mMonth),Integer.parseInt(mYear));
 
         Toast.makeText(getActivity(),"want car",Toast.LENGTH_LONG).show();
         recyclerView = w.findViewById(R.id.recyclerView);
@@ -81,16 +81,16 @@ public class WantCar extends Fragment {
         final DateString dateString = new DateString();
         //requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-        final String url = "https://bounce-hackathon.herokuapp.com/api/sortvehicle?pick="+dateString.getmDate()+"&drop="+dateString.getMdayEnd()+"&lat="+dateString.getLat()+"lon=7"+dateString.getLon();
 
 
 
-    getLocationPermission();
-    getDeviceLocation();
+
+        getLocationPermission();
+        getDeviceLocation();
         SharedPreferences prefs = getActivity().getSharedPreferences("location", getActivity().MODE_PRIVATE);
 
-            float lat = prefs.getFloat("lat",  0);//"No name defined" is the default value.
-            float lon = prefs.getFloat("long", 0); //0 is the default value.
+        float lat = prefs.getFloat("lat",  0);//"No name defined" is the default value.
+        float lon = prefs.getFloat("long", 0); //0 is the default value.
 
         dateString.setLat(lat);
         dateString.setLon(lon);
@@ -109,6 +109,7 @@ public class WantCar extends Fragment {
                 dateString.setmYear(mYear);
                 dateString.setMdayEnd(arrend[0]);
                 dateString.setmMonthEnd(arrend[1]);
+                String url = "https://bounce-hackathon.herokuapp.com/api/sortvehicle?pick="+dateString.getmDate()+"&drop="+dateString.getMdayEnd()+"&lat="+dateString.getLat()+"lon=7"+dateString.getLon();
                 JsonArrayRequest ExampleRequest = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -121,6 +122,7 @@ public class WantCar extends Fragment {
                                 listitems.add(list);                                //2440004
                             }
                             adapter = new RentCarAdapter(listitems,getActivity());
+                            adapter.notifyDataSetChanged();
                             recyclerView.setAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -139,7 +141,7 @@ public class WantCar extends Fragment {
         });
 
 
-         return w;
+        return w;
 
     }
 
@@ -234,11 +236,7 @@ public class WantCar extends Fragment {
 
 //        mDatabase1 = FirebaseDatabase.getInstance().getReference();
         LocationRequest request = new LocationRequest();
-<<<<<<< HEAD
-//        request.setInterval(10000);
-=======
         //request.setInterval(10000);
->>>>>>> ab4e1ba723a723a9c6ec3e45b8ef33471caa361e
 //        request.setFastestInterval(1000);
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
@@ -278,7 +276,7 @@ public class WantCar extends Fragment {
                                 editor.putFloat("long", (float) currentlocation.getLongitude());
                                 editor.apply();
 
-           Toast.makeText(getContext(),Double.toString(currentlocation.getLatitude()),Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(),Double.toString(currentlocation.getLatitude()),Toast.LENGTH_LONG).show();
                                 Toast.makeText(getContext(),Double.toString(currentlocation.getLongitude()),Toast.LENGTH_LONG).show();
 
 

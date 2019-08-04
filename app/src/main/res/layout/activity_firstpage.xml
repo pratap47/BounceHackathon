@@ -4,33 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF7A22"
+    android:background="#4AC7D0"
 
     tools:context=".firstpage"
     >
 
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="157dp"
-        android:layout_height="119dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="126dp"
-        android:layout_marginEnd="128dp"
-        android:layout_marginBottom="438dp"
-        android:background="@drawable/roundedbtn"
-        android:text="apni gaadi"
-        android:textAllCaps="true"
-        android:textStyle="italic" />
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="248dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="348dp"
         android:src="@drawable/app_icon" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="243dp"
+        android:text="Apni Gaadi"
+        android:textSize="30sp"
+        android:gravity="center"/>
 
 </RelativeLayout>

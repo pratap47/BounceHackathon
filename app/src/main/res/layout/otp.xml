@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".otp"
 
-    android:background="@color/colorPrimary">
+    android:background="#4AC7D0">
 
     <TextView
         android:id="@+id/textView"
@@ -20,26 +20,15 @@
         android:layout_marginEnd="0dp"
         android:text="You need to verify your phone no. before entering into the app."
         android:textColor="#E91E63"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" />
 
-    <EditText
-        android:id="@+id/nameotp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="144dp"
-        android:layout_marginEnd="0dp"
-        android:hint="Enter Name" />
 
     <EditText
         android:id="@+id/phoneEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/phoneEditText"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="221dp"
@@ -64,9 +53,7 @@
         android:id="@+id/btnotp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="1dp"
         android:layout_marginTop="419dp"
         android:text="GET OTP" />
 
