@@ -71,7 +71,7 @@ public class WantCar extends Fragment {
         mBodyend = w.findViewById(R.id.mBodyEnd);
         btnSubmit = w.findViewById(R.id.btnsubmit);
 
-      //  DateString dateObject = new DateString(Integer.parseInt(mDay),Integer.parseInt(mMonth),Integer.parseInt(mYear));
+        //  DateString dateObject = new DateString(Integer.parseInt(mDay),Integer.parseInt(mMonth),Integer.parseInt(mYear));
 
         Toast.makeText(getActivity(),"want car",Toast.LENGTH_LONG).show();
         recyclerView = w.findViewById(R.id.recyclerView);
@@ -85,12 +85,12 @@ public class WantCar extends Fragment {
 
 
 
-    getLocationPermission();
-    getDeviceLocation();
+        getLocationPermission();
+        getDeviceLocation();
         SharedPreferences prefs = getActivity().getSharedPreferences("location", getActivity().MODE_PRIVATE);
 
-            float lat = prefs.getFloat("lat",  0);//"No name defined" is the default value.
-            float lon = prefs.getFloat("long", 0); //0 is the default value.
+        float lat = prefs.getFloat("lat",  0);//"No name defined" is the default value.
+        float lon = prefs.getFloat("long", 0); //0 is the default value.
 
         dateString.setLat(lat);
         dateString.setLon(lon);
@@ -141,7 +141,7 @@ public class WantCar extends Fragment {
         });
 
 
-         return w;
+        return w;
 
     }
 
@@ -276,7 +276,7 @@ public class WantCar extends Fragment {
                                 editor.putFloat("long", (float) currentlocation.getLongitude());
                                 editor.apply();
 
-           Toast.makeText(getContext(),Double.toString(currentlocation.getLatitude()),Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(),Double.toString(currentlocation.getLatitude()),Toast.LENGTH_LONG).show();
                                 Toast.makeText(getContext(),Double.toString(currentlocation.getLongitude()),Toast.LENGTH_LONG).show();
 
 

@@ -8,9 +8,10 @@
     <string name="action_settings">Settings</string>
 
     <string name="Dashboard">DashBoard</string>
-    <string name="AddVehicle">Add a vehicle</string>
-    <string name="RentVehicle">Rent a Vehicle</string>
+    <string name="AddVehicle">Add vehicle</string>
+    <string name="RentVehicle">Rent Vehicle</string>
     <string name="profile">Profile</string>
+    <string name="Logout">Logout</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
