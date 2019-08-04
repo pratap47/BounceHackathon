@@ -147,6 +147,9 @@ public class WantCar extends Fragment {
 
 
 
+
+
+
     private void getLocationPermission() {
         /*
          * Request location permission, so that we can get the location of the
@@ -291,9 +294,6 @@ public class WantCar extends Fragment {
 
         }
     }
-
-
-
 
 
 
